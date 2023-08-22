@@ -72,10 +72,15 @@ var startsWith = function (fruits, letter) {
 // return a filtered array containing only cookie-type desserts.
 var cookiesOnly = function (desserts) {
 
+  var result = _.filter(desserts, function(dessert) { return dessert.type === 'cookie'});
+  return result;
+
 };
 
 // rebuild the getUserTweets function from above with _.filter instead
 var filterUserTweets = function(tweets, user) {
+  var result = _.filter(tweets, function(tweet) { return tweet.user === user });
+  return result;
 
 };
 
@@ -88,6 +93,10 @@ var filterUserTweets = function(tweets, user) {
 // given an array of strings, use _.map to return a new array containing all
 // strings converted to uppercase letters.
 var upperCaseFruits = function (fruits) {
+  _.map(fruits, function(fruit) {
+    return fruit.toUpperCase();
+  });
+
 
 };
 
@@ -96,6 +105,18 @@ var upperCaseFruits = function (fruits) {
 // TIP: Items that contain flour are not gluten-free.
 var glutenFree = function (desserts) {
 
+  _.map(desserts, function(dessert) {
+    var dessertObj = {};
+    if (dessert.ingredients.indexOf('flour') === -1) {
+      dessertObj['name'] = dessert.name;
+      dessertObj['ingredients'] = dessert.ingredients;
+      dessertObj['type'] = dessert.type;
+      dessertObj['glutenFree'] = true;
+    }
+    desserts.push(dessertObj);
+  });
+
+  return _.filter(desserts, function(dessert) { return desserts.glutenFree === true; });
 };
 
 // given an array of tweet objects, return a new array of strings
