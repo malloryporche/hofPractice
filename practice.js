@@ -163,7 +163,6 @@ var applyCoupon = function (groceries, coupon) {
     itemObj['salePrice'] = '$' + (itemObj.price - couponPrice);
     results[index] = itemObj;
   });
-  console.log(groceries, typeof groceries);
   return results;
 };
 
@@ -175,13 +174,28 @@ var applyCoupon = function (groceries, coupon) {
 
 // return the total price of all products.
 var sumTotal = function (products) {
+  var prices = [];
 
+  _.each(products, function(product) {
+    prices.push(parseFloat(product.price.slice(1)));
+  });
+
+  var sum = _.reduce(prices, function(memo, num) {
+    return (memo + num);
+  }, 0);
+
+  return sum;
 };
 
 // return an object consisting of dessert types and how many of each.
 // exampleOutput: { dessertType: 3, dessertType2: 1 }
 var dessertCategories = function (desserts) {
+  var dessertTypes = _.map(desserts, function(dessert) { return dessert.type
+  });
 
+  var dessertCounts = _.reduce(dessertTypes, (count, item) => (count[item] = count[item] + 1 || 1, count), {});
+
+  return dessertCounts;
 };
 
 // return an object with the proper count of all user messages
