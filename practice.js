@@ -123,6 +123,11 @@ var glutenFree = function (desserts) {
 // containing only the message properties.
 var allUserMessages = function(tweets) {
 
+  var results = _.map(tweets, function(tweet) {
+    return tweet.message;
+  });
+
+  return results;
 };
 
 // use _.map to return an array of items with their sale prices, with a new property
@@ -147,6 +152,19 @@ var allUserMessages = function(tweets) {
 */
 var applyCoupon = function (groceries, coupon) {
 
+  var results = {};
+
+  _.map(groceries, function(item, index) {
+    var itemObj = {};
+    itemObj['id'] = item.id;
+    itemObj['product'] = item.product;
+    itemObj['price'] = item.price.slice(1);
+    var couponPrice = parseFloat(((item.price.slice(1)) * 100 * coupon)/100).toFixed(2);
+    itemObj['salePrice'] = '$' + (itemObj.price - couponPrice);
+    results[index] = itemObj;
+  });
+  console.log(groceries, typeof groceries);
+  return results;
 };
 
 /*
